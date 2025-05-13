@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Confirmação de Localização</title>
+</head>
+<body>
+  <h2>Verificação de Localização</h2>
+  <p>Aperte o botão abaixo e permita o acesso à localização para continuar.</p>
+  <button onclick="getLocation()">Permitir Localização</button>
+  <p id="output"></p>
+
+  <script>
+    function getLocation() {
+      const output = document.getElementById("output");
+
+      if (!navigator.geolocation) {
+        output.innerHTML = "Geolocalização não suportada.";
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          const lat = position.coords.latitude;
+          const lon = position.coords.longitude;
+
+          output.innerHTML = `Latitude: ${lat}<br>Longitude: ${lon}`;
+
+          // Enviar para servidor se quiser:
+          // fetch("https://seuservidor.com/api", { ... });
+        },
+        error => {
+          output.innerHTML = `Erro ao obter localização: ${error.message}`;
+        }
+      );
+    }
+  </script>
+</body>
+</html>
